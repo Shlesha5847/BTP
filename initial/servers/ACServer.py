@@ -10,7 +10,7 @@ from servers.CloudStorage import CloudStorage
 
 
 class AccessControlServer:
-    def __init__(self, aa):
+    def __init__(self, aa): # AC server is created ad it receives a reference to AA 
         """
         aa : AttributeAuthority instance (to share user info)
         """

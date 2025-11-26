@@ -16,15 +16,15 @@ class AttributeAuthority:
         """
         universe_attributes: U = ["Doctor", "Cardiology", ...]
         """
-        self.U = list(universe_attributes)
+        self.U = list(universe_attributes) # converting all the attributes into list 
 
         # In real CP-ABE: alpha, beta, t_i in Z_p, group elements, etc.
         # Here: we simulate with random integers and bytes for demo.
         self.master_secret = os.urandom(32)  # global master key (simulated)
         self.attr_secrets = {
             att: os.urandom(16) for att in self.U
-        }  # one secret per attribute
-
+        }  # each attributes secret value -- T_i = g^(t_i)
+        # These secrets are used to derive per-user attribute keys.
         # Public key can conceptually contain "public attribute labels"
         self.PK = {
             "universe": self.U
@@ -38,6 +38,7 @@ class AttributeAuthority:
     def hash_h2(self, ID_i: dict, QID_i: bytes) -> bytes:
         data = (str(ID_i)).encode("utf-8") + QID_i
         return hashlib.sha256(data).digest()
+    #h₂ = H(IDᵢ, QIDᵢ) This prevents some token forgeries (in initial scheme).
 
     # ---------------------- KeyGen -----------------------
     def keygen_with_trace(self, ID_i: dict, AU_star):

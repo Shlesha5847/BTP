@@ -11,12 +11,14 @@ import hashlib
 class TraceAuthority:
     def __init__(self):
         # registry: real RID -> anonymous ID_i
+        # RID is real ID of user , ID_i is anonymous. maintains this mapping
         self.registry = {}
 
     def h1(self, rid: str, id1: str, t: str) -> bytes:
         """Hash-based h1 used for generating ID2."""
         concat = (rid + id1 + t).encode("utf-8")
         return hashlib.sha256(concat).digest()
+    #Used to compute a masked version of RID.
 
     def register(self, RID: str, ID1: str, T: str):
         """
@@ -26,7 +28,10 @@ class TraceAuthority:
             T   : validity period/string
 
         Output:
-            ID_i = {ID1, ID2, T}
+            ID_i = {ID1, ID2, T} , 
+            ID1 = pseudonym
+            ID2 = masked identity
+            T = time period
         """
         h = self.h1(RID, ID1, T)
 

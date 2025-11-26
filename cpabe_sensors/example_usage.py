@@ -1,4 +1,4 @@
-from cpabe_initial import (
+from cpabe_fixed import (
     setup,
     keygen,
     encrypt,
