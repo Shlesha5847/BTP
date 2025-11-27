@@ -3,7 +3,7 @@
 # ============================================================
 
 from charm.toolbox.pairinggroup import pair 
-def partial_decrypt(self, pk, ct, sk):
+def partial_decrypt(group, pk, ct, sk):
     """
     partial_decrypt_fixed(PK, CT, SK) -> (C_star, CT)
 

@@ -52,12 +52,12 @@ def encrypt(group, pk, mk, message_bytes, policy_attrs):
     C_hat = g**s
 
     # 5) Symmetric encryption
-    sym_key = kdf(self.group ,KEY)
+    sym_key = kdf(group ,KEY)
     sym = SymmetricCryptoAbstraction(sym_key)
     CS = sym.encrypt(message_bytes)
 
     # 6) Verification tag
-    h_key = hash_to_ZR(self.group, KEY)
+    h_key = hash_to_ZR(group, KEY)
     h_msg = hash_to_ZR(group, message_bytes)
     VK1 = g**h_key
     VK2 = g**h_msg

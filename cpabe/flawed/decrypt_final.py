@@ -6,7 +6,7 @@ from cpabe.utils.hashing import hash_to_ZR
 # ============================================================
 # Final decrypt (User side)
 # ============================================================
-def final_decrypt(self, pk, sk, C_dec, ct):
+def final_decrypt(group, pk, sk, C_dec, ct):
     """
     final_decrypt_flawed(pk, SK, C_dec, CT) -> M
 
@@ -36,13 +36,13 @@ def final_decrypt(self, pk, sk, C_dec, ct):
     KEY = Ce / C_dec  # GT element
 
     # 2) Symmetric decryption
-    sym_key = kdf(self.group,KEY)
+    sym_key = kdf(group,KEY)
     sym = SymmetricCryptoAbstraction(sym_key)
     M_bytes = sym.decrypt(CS)
 
     # 3) Verification
-    h_key = hash_to_ZR(self.group,KEY)
-    h_msg = hash_to_ZR(M_bytes)
+    h_key = hash_to_ZR(group,KEY)
+    h_msg = hash_to_ZR(group,M_bytes)
     VK1_chk = g**h_key
     VK2_chk = g**h_msg
 

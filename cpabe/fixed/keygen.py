@@ -4,7 +4,7 @@ from charm.toolbox.pairinggroup import ZR
 # ============================================================
 # KeyGen: identity-bound + traceability
 # ============================================================
-def keygen(self, pk, mk, user_id_bytes, user_attrs):
+def keygen(group, pk, mk, user_id_bytes, user_attrs):
     """
     KeyGen_fixed(PK, MK, ID_i, S) -> SK
 
@@ -49,15 +49,15 @@ def keygen(self, pk, mk, user_id_bytes, user_attrs):
     # -------------------
     # Hash ID_i into ZR. This is the identity exponent used to
     # augment decryption exponents and block collusion.
-    h_i = self.group.hash(user_id_bytes, ZR)
+    h_i = group.hash(user_id_bytes, ZR)
 
     # -------------------
     # 2) attribute randomness and r sum
     # -------------------
     r_j = {}
-    total_r = self.group.init(ZR, 0)
+    total_r = group.init(ZR, 0)
     for attr in user_attrs:
-        rv = self.group.random(ZR)
+        rv = group.random(ZR)
         r_j[attr] = rv
         total_r += rv
 
@@ -74,15 +74,15 @@ def keygen(self, pk, mk, user_id_bytes, user_attrs):
     # 4)–7) Traceability (QID_i, PSK_i)
     # -------------------
     # Choose per-user randomness d_i
-    d_i = self.group.random(ZR)
+    d_i = group.random(ZR)
 
     # QID_i = d_i * P in G1
     QID_i = d_i * P
 
     # h2 = H2(ID_i, QID_i) in ZR
     # Use ID_i concatenated with serialized QID_i as input
-    h2_input = user_id_bytes + self.group.serialize(QID_i)
-    h2_val = self.group.hash(h2_input, ZR)
+    h2_input = user_id_bytes + group.serialize(QID_i)
+    h2_val = group.hash(h2_input, ZR)
 
     # PSK_i = d_i + h2 * alpha
     PSK_i = d_i + h2_val * alpha

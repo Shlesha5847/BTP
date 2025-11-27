@@ -2,7 +2,7 @@ from charm.toolbox.pairinggroup import  pair
 # ============================================================
 # Partial decrypt (AC / Server side)
 # ============================================================
-def partial_decrypt(self, pk, ct, sk):
+def partial_decrypt(group, pk, ct, sk):
     """
     partial_decrypt_flawed(pk, CT, SK) -> (C_dec, CT)
 

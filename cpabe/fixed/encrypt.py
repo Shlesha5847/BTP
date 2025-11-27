@@ -8,7 +8,7 @@ from cpabe.utils.hashing import hash_to_ZR
 # ============================================================
 # Encrypt: same structure as before (no change)
 # ============================================================
-def encrypt(self, pk, message_bytes, policy_attrs):
+def encrypt(group, pk, message_bytes, policy_attrs):
     """
     Encrypt(PK, M, P) -> CT
 
@@ -30,7 +30,7 @@ def encrypt(self, pk, message_bytes, policy_attrs):
     """
     g = pk["g"]
     Y = pk["Y"]
-    group = self.group
+    group = group
 
     # random s in Z_p
     s = group.random(ZR)
@@ -45,13 +45,13 @@ def encrypt(self, pk, message_bytes, policy_attrs):
     C_hat = g**s
 
     # Symmetric encryption using KEY
-    sym_key = kdf(self.group, KEY)
+    sym_key = kdf(group, KEY)
     sym = SymmetricCryptoAbstraction(sym_key)
     CS = sym.encrypt(message_bytes)
 
     # Verification tag
-    h_key = hash_to_ZR(KEY)
-    h_msg = hash_to_ZR(message_bytes)
+    h_key = hash_to_ZR(group,KEY)
+    h_msg = hash_to_ZR(group,message_bytes)
     VK1 = g**h_key
     VK2 = g**h_msg
 
