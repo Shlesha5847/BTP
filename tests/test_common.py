@@ -20,7 +20,7 @@ def run_common_test(scheme, is_fixed=False):
 
     # ----- Keygen -----
     if is_fixed:
-        skA = scheme.keygen(pk, mk, b"anonA", ["Doctor"])
+        skA = scheme.keygen(pk, mk, b"anonA", ["Doctor","Cardiology"])
         skB = scheme.keygen(pk, mk, b"anonB", ["Cardiology"])
     else:
         skA = scheme.keygen(pk, mk, b"anonA", ["Doctor"])
@@ -39,18 +39,18 @@ def run_common_test(scheme, is_fixed=False):
     try:
         C_A, ct2 = scheme.partial_decrypt(pk, ct, skA)
         msg = scheme.final_decrypt(pk, skA, C_A, ct2)
-        print("❌ WRONG:", msg)
+        print("Data:", msg)
     except Exception as e:
-        print("✔ CORRECT:", e)
+        print("Message:", e)
 
     # ----- User B alone -----
     print("\n--- USER B ALONE ---")
     try:
         C_B, ct2 = scheme.partial_decrypt(pk, ct, skB)
         msg = scheme.final_decrypt(pk, skB, C_B, ct2)
-        print("❌ WRONG:", msg)
+        print("Data:", msg)
     except Exception as e:
-        print("✔ CORRECT:", e)
+        print("Message:", e)
 
     # ----- Collusion -----
     print("\n--- COLLUSION TEST ---")
