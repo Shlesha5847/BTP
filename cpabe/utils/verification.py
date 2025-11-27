@@ -5,7 +5,7 @@
 
 from charm.toolbox.pairinggroup import ZR 
 
-def verify_token(self, pk, sk):
+def verify_token(group, pk, sk):
     """
     Verify the traceability equation:
 
@@ -35,7 +35,7 @@ def verify_token(self, pk, sk):
 
     # h2(ID_i, QID_i) ∈ ZR
     h2_input = ID_i + group.serialize(QID_i)
-    h2_val = self.group.hash(h2_input, ZR)
+    h2_val = group.hash(h2_input, ZR)
 
     # Right-hand side: QID_i + h2 * Tpub_AA
     right = QID_i + (h2_val * Tpub_AA)

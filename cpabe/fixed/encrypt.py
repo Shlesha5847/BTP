@@ -45,7 +45,7 @@ def encrypt(self, pk, message_bytes, policy_attrs):
     C_hat = g**s
 
     # Symmetric encryption using KEY
-    sym_key = kdf(KEY)
+    sym_key = kdf(self.group, KEY)
     sym = SymmetricCryptoAbstraction(sym_key)
     CS = sym.encrypt(message_bytes)
 

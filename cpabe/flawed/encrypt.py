@@ -8,7 +8,7 @@ from cpabe.utils.hashing import hash_to_ZR
 # ============================================================
 # Encrypt
 # ============================================================
-def encrypt(self, pk, message_bytes, policy_attrs):
+def encrypt(group, pk, mk, message_bytes, policy_attrs):
     """
     Encrypt(pk, M, P) -> CT
 
@@ -26,13 +26,13 @@ def encrypt(self, pk, message_bytes, policy_attrs):
 
     CT = { Ce, C_hat, CS, VK1, VK2, policy_attrs }
     """
-    if self.mk is None:
+    if mk is None:
         raise Exception("Run setup() first so self.mk is initialized.")
 
     g = pk["g"]
     Y = pk["Y"]  # not strictly needed, but kept for structural analogy
-    group = self.group
-    w_map = self.mk["w"]
+    group = group
+    w_map = mk["w"]
 
     # 1) Ensure w[a] defined, compute S_w
     S_w = group.init(ZR, 0)
@@ -52,13 +52,13 @@ def encrypt(self, pk, message_bytes, policy_attrs):
     C_hat = g**s
 
     # 5) Symmetric encryption
-    sym_key = kdf(KEY)
+    sym_key = kdf(self.group ,KEY)
     sym = SymmetricCryptoAbstraction(sym_key)
     CS = sym.encrypt(message_bytes)
 
     # 6) Verification tag
-    h_key = hash_to_ZR(KEY)
-    h_msg = hash_to_ZR(message_bytes)
+    h_key = hash_to_ZR(self.group, KEY)
+    h_msg = hash_to_ZR(group, message_bytes)
     VK1 = g**h_key
     VK2 = g**h_msg
 
