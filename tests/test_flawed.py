@@ -1,6 +1,6 @@
-# tests/test_vulnerable.py
 
-from cpabe.vulnerable.scheme import CollusionFlawedCPABE
+
+from cpabe.flawed.scheme import CollusionFlawedCPABE
 from tests.test_common import run_common_test
 
 if __name__ == "__main__":

@@ -3,8 +3,8 @@
 # Shared test runner for both CP-ABE schemes
 # ============================================================
 
-from cpabe.vulnerable.scheme import CollusionFlawedCPABE
-from cpabe.secure.scheme import SensorsCPABEFixedIDBound
+from cpabe.flawed.scheme import CollusionFlawedCPABE
+from cpabe.fixed.scheme import SensorsCPABEFixedIDBound
 
 
 def run_common_test(scheme, is_fixed=False):

@@ -1,6 +1,6 @@
-# tests/test_secure.py
 
-from cpabe.secure.scheme import SensorsCPABEFixedIDBound
+
+from cpabe.fixed.scheme import SensorsCPABEFixedIDBound
 from tests.test_common import run_common_test
 
 if __name__ == "__main__":

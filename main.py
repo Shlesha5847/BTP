@@ -9,8 +9,8 @@
 from tests.test_common import run_common_test
 
 # Import both schemes
-from cpabe.vulnerable.scheme import CollusionFlawedCPABE
-from cpabe.secure.scheme import SensorsCPABEFixedIDBound
+from cpabe.flawed.scheme import CollusionFlawedCPABE
+from cpabe.fixed.scheme import SensorsCPABEFixedIDBound
 
 
 def main():
