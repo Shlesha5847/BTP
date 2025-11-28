@@ -1,10 +1,10 @@
 # main.py
-# ================================================================
+# ==============================================================
 # Entry point for running CP-ABE tests
 # You can choose which scheme to test:
 #   1) Vulnerable CP-ABE (collusion-possible)
 #   2) Secure CP-ABE (identity-bound & collusion-resistant)
-# ================================================================
+# ==============================================================
 
 from tests.test_common import run_common_test
 
