@@ -16,7 +16,11 @@ def run_common_test(scheme, is_fixed=False):
     pk, mk = scheme.setup()
 
     policy = ["Doctor", "Cardiology"]
-    message = b"ECG VERY SECRET DATA"
+    # message = b"ECG VERY SECRET DATA"
+    with open("data/ecg_data.csv", "rb") as f:
+        message = f.read()
+
+    print("\nDataset loaded, size:", len(message), "bytes")
 
     # ----- Keygen -----
     if is_fixed:
@@ -39,7 +43,9 @@ def run_common_test(scheme, is_fixed=False):
     try:
         C_A, ct2 = scheme.partial_decrypt(pk, ct, skA)
         msg = scheme.final_decrypt(pk, skA, C_A, ct2)
-        print("Data:", msg)
+        # print("Data:", msg)
+        print("\n--- DECRYPTED DATASET CONTENT ---")
+        print(msg.decode()) 
     except Exception as e:
         print("Message:", e)
 
@@ -48,7 +54,9 @@ def run_common_test(scheme, is_fixed=False):
     try:
         C_B, ct2 = scheme.partial_decrypt(pk, ct, skB)
         msg = scheme.final_decrypt(pk, skB, C_B, ct2)
-        print("Data:", msg)
+        # print("Data:", msg)
+        print("\n--- DECRYPTED DATASET CONTENT ---")
+        print(msg.decode())        
     except Exception as e:
         print("Message:", e)
 
@@ -79,6 +87,8 @@ def run_common_test(scheme, is_fixed=False):
     try:
         C_C, ct2 = scheme.partial_decrypt(pk, ct, colluders)
         msg = scheme.final_decrypt(pk, colluders, C_C, ct2)
-        print("COLLUSION RESULT:", msg)
+        print("COLLUSION RESULT:")
+        print("\n--- DECRYPTED DATASET CONTENT ---")
+        print(msg.decode())        
     except Exception as e:
         print("COLLUSION FAILED:", e)
